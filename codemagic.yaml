@@ -3,29 +3,18 @@ workflows:
     name: Android Release
     max_build_duration: 60
     environment:
-      vars:
-        KEYSTORE_BASE64: Encrypted[...sua_key_aqui...]
-        KEYSTORE_PASSWORD: Encrypted[...sua_key_aqui...]
-        KEY_ALIAS: Encrypted[...sua_key_aqui...]
-        KEY_PASSWORD: Encrypted[...sua_key_aqui...]
       flutter: stable
       java: 17
+
     scripts:
-      - name: Prepare keystore and key.properties
-        script: |
-          set -e
-          echo $KEYSTORE_BASE64 | base64 --decode > $CM_BUILD_DIR/keystore.jks
-          cat > $CM_PROJECT_PATH/android/key.properties <<EOF
-          storeFile=$CM_BUILD_DIR/keystore.jks
-          storePassword=$KEYSTORE_PASSWORD
-          keyAlias=$KEY_ALIAS
-          keyPassword=$KEY_PASSWORD
-          EOF
-      - name: Flutter pub get
+      - name: Instalar dependências
         script: |
           flutter pub get
-      - name: Build App Bundle
+
+      - name: Compilar app em modo release
         script: |
           flutter build appbundle --release
+
     artifacts:
       - build/app/outputs/bundle/**/*.aab
+      - build/app/outputs/flutter-apk/**/*.apk
