@@ -13,7 +13,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.tochegando.motoboy"
-    compileSdk 34
+    compileSdk 33
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId "com.tochegando.motoboy"
         minSdk 23
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
