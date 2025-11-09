@@ -1,70 +1,29 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-}
-
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties') 
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
 }
 
 android {
-    namespace "com.tochegando.motoboy"
-    compileSdk 33
-
-    compileOptions {
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    namespace "com.seuprojeto.app"
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.tochegando.motoboy"
+        applicationId "com.seuprojeto.app"
         minSdk 23
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
 
-    signingConfigs {
-        release {
-            if (keystorePropertiesFile.exists()) {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-            }
-        }
-    }
-    
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
+            signingConfig signingConfigs.debug
         }
-        debug { }
     }
-}
-
-flutter {
-    source '../..'
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:32.8.1')
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
-    implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
-    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.4"
 }
